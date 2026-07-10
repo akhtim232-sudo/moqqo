@@ -1,7 +1,7 @@
 # Moqqo Restobar — сайт
 
 Статический сайт (HTML/CSS/JS, без сборщиков) для публикации на GitHub Pages:
-**https://tamirlan2039.github.io/moqqo**
+**https://akhtim232-sudo.github.io/moqqo**
 
 ## Какие файлы редактировать
 
@@ -30,11 +30,11 @@
 
 ## Публикация на GitHub Pages
 
-1. Создайте репозиторий `moqqo` в аккаунте `tamirlan2039`.
+1. Создайте репозиторий `moqqo` в аккаунте `akhtim232-sudo`.
 2. Загрузите туда всё содержимое этой папки (ветка `main`).
 3. В настройках репозитория: Settings → Pages → Source: **Deploy from a branch**,
    Branch: **main**, папка **/ (root)** → Save.
-4. Через пару минут сайт откроется по адресу `https://tamirlan2039.github.io/moqqo/`.
+4. Через пару минут сайт откроется по адресу `https://akhtim232-sudo.github.io/moqqo/`.
 
 Команды для терминала (из этой папки):
 
@@ -43,6 +43,6 @@ git init
 git add .
 git commit -m "Moqqo Restobar site"
 git branch -M main
-git remote add origin https://github.com/tamirlan2039/moqqo.git
+git remote add origin https://github.com/akhtim232-sudo/moqqo.git
 git push -u origin main
 ```
