@@ -191,8 +191,10 @@ function initHeroMedia() {
 function renderMarquees() {
   document.querySelectorAll("[data-marquee]").forEach((track) => {
     const items = pick(SITE, track.dataset.marquee) || [];
-    const half = items.map((x) => `<span>${x}</span>`).join("");
-    track.innerHTML = half + half; // трек продублирован для бесшовного цикла
+    // половина трека повторяется трижды, чтобы быть шире любого экрана,
+    // затем дублируется целиком — цикл бесшовный на всех ширинах
+    const half = (items.map((x) => `<span>${x}</span>`).join("")).repeat(3);
+    track.innerHTML = half + half;
   });
 }
 
