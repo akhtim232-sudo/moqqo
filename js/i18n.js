@@ -57,6 +57,13 @@ const I18N = {
     "c.delivery": "Доставка",
     "c.hours": "Часы работы",
 
+    // Главная (новые блоки)
+    "sec.about": "Знакомьтесь, Moqqo.",
+    "btn.viewMenu": "Смотреть меню",
+    "btn.more": "Подробнее",
+    "btn.bookShort": "Забронировать",
+    "sec.faq": "Частые вопросы",
+
     // Прочее
     "misc.photoSoon": "Фото скоро",
     "misc.karaoke": "Караоке",
@@ -115,6 +122,13 @@ const I18N = {
     "c.insta": "Instagram",
     "c.delivery": "Жеткізу",
     "c.hours": "Жұмыс уақыты",
+
+    // Главная (новые блоки)
+    "sec.about": "Танысыңыз, Moqqo.",
+    "btn.viewMenu": "Мәзірді қарау",
+    "btn.more": "Толығырақ",
+    "btn.bookShort": "Брондау",
+    "sec.faq": "Жиі қойылатын сұрақтар",
 
     // Прочее
     "misc.photoSoon": "Фото жақында",

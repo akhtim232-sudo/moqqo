@@ -165,14 +165,89 @@ function photoBoxHtml(src, extraClass) {
   return `<div class="photo-box ${extraClass || ""}">${inner}</div>`;
 }
 
-/* ---------- Фото в hero на главной ----------
-   Пока в site-data.js поле heroPhoto пустое — рисуется встроенная
-   SVG-сцена (горы на закате). Впишите путь к фото — подставится оно. */
-function applyHeroPhoto() {
-  const bg = document.getElementById("heroBg");
-  if (bg && SITE.heroPhoto) {
-    bg.innerHTML = `<img src="${SITE.heroPhoto}" alt="">`;
+/* ---------- Медиа в hero ----------
+   Порядок: видео img/hero.mp4 → фото img/hero.jpg → заглушка.
+   Заглушка уже стоит в HTML; видео/фото подменяют её, когда файл есть. */
+function initHeroMedia() {
+  const box = document.getElementById("heroMedia");
+  if (!box) return;
+  const v = document.createElement("video");
+  v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+  v.setAttribute("playsinline", ""); v.setAttribute("muted", "");
+  v.addEventListener("canplay", () => {
+    box.innerHTML = ""; box.appendChild(v);
+    v.play().catch(() => {});
+  }, { once: true });
+  v.addEventListener("error", () => {
+    const img = new Image();
+    img.alt = "";
+    img.onload = () => { box.innerHTML = ""; box.appendChild(img); };
+    img.src = SITE.heroPhoto; // если и фото нет — остаётся заглушка
+  }, { once: true });
+  v.src = SITE.heroVideo;
+}
+
+/* ---------- Бегущие строки ---------- */
+function renderMarquees() {
+  document.querySelectorAll("[data-marquee]").forEach((track) => {
+    const items = pick(SITE, track.dataset.marquee) || [];
+    const half = items.map((x) => `<span>${x}</span>`).join("");
+    track.innerHTML = half + half; // трек продублирован для бесшовного цикла
+  });
+}
+
+/* ---------- Тёмные карточки на главной ---------- */
+function renderHomeCards() {
+  const box = document.getElementById("homeCards");
+  if (!box) return;
+  const c = SITE.homeCards;
+  box.innerHTML = `
+    <div class="card-wide">
+      <h3>${pick(SITE.letnik, "title")}</h3>
+      ${photoBoxHtml(SITE.letnik.photos[0])}
+      <p>${pick(SITE.letnik, "text")}</p>
+    </div>
+    <div class="card-dark">
+      <span class="gold-dot">✦</span>
+      <div><h3>${pick(c.dark1, "title")}</h3><p style="margin-top:8px">${pick(c.dark1, "text")}</p></div>
+    </div>
+    <div class="card-dark">
+      <span class="gold-dot">✦</span>
+      <div><h3>${pick(c.dark2, "title")}</h3><p style="margin-top:8px">${pick(c.dark2, "text")}</p></div>
+    </div>`;
+}
+
+/* ---------- FAQ-аккордеон ---------- */
+function renderFaq() {
+  const box = document.getElementById("faqList");
+  if (!box) return;
+  box.innerHTML = SITE.faq.map(
+    (f) => `
+    <details class="faq-item">
+      <summary>${pick(f, "q")}<span class="faq-x">+</span></summary>
+      <div class="faq-a">${pick(f, "a")}</div>
+    </details>`
+  ).join("");
+}
+
+/* ---------- Появление при скролле ---------- */
+let revealIO = null;
+function initReveal() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!revealIO) {
+    revealIO = new IntersectionObserver((es) => {
+      es.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("in"); revealIO.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
   }
+  document.querySelectorAll(
+    ".sec-head, .promo-card, .vip-big, .feature-card, .card-wide, .card-dark, .faq-item, .about-split > *, .role"
+  ).forEach((el) => {
+    if (el.classList.contains("in")) return;
+    el.classList.add("rv");
+    revealIO.observe(el);
+  });
 }
 
 /* ---------- Акции (Главная и Меню) ---------- */
@@ -195,11 +270,14 @@ function renderVipPreview() {
   if (!box) return;
   box.innerHTML = VIP_ZONES.map(
     (z) => `
-    <a class="vip-mini" href="vip.html#${z.id}">
-      ${photoBoxHtml(z.photos[0])}
-      <h3>${z.name}</h3>
-      <p class="gold">${pick(z, "badge")}</p>
-      <p class="dim">${pick(z, "priceLines")[0]}</p>
+    <a class="vip-big" href="vip.html#${z.id}">
+      ${photoBoxHtml(z.photos[0], "dark")}
+      <div class="vip-big-overlay">
+        <h3>${z.name}</h3>
+        <p class="vip-line">${pick(z, "badge")} · ${pick(z, "features")[0]}</p>
+        <p class="vip-price">${pick(z, "priceLines")[0]}</p>
+        <span class="btn"><span data-i18n="btn.more">${t("btn.more")}</span><span class="arr">→</span></span>
+      </div>
     </a>`
   ).join("");
 }
@@ -274,13 +352,16 @@ function renderAll() {
   renderGalleries();
   renderLetnikStats();
   renderRoles();
+  renderHomeCards();
+  renderMarquees();
+  renderFaq();
   renderFooter();
   document.querySelectorAll("[data-book-wa]").forEach((a) => {
     a.href = waLink(pick(SITE, "bookText"));
   });
-  applyHeroPhoto();
   applySiteText();
   applyI18n();
+  initReveal();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -307,6 +388,15 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAll();
   updateCartBadge();
   initParallax();
+  initHeroMedia();
+
+  // шапка: прозрачная поверх hero, при прокрутке — с блюром
+  const hdr = document.querySelector(".site-header");
+  if (hdr) {
+    const onS = () => hdr.classList.toggle("scrolled", window.scrollY > 8);
+    window.addEventListener("scroll", onS, { passive: true });
+    onS();
+  }
 
   document.addEventListener("langchange", renderAll);
 });
