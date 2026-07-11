@@ -151,10 +151,28 @@ function initParallax() {
 /* ---------- Галерея: фото или аккуратные заглушки ---------- */
 function galleryHtml(photos, placeholders) {
   const cells = photos && photos.length
-    ? photos.map((src) => `<div class="ph"><div class="ph-in" data-plx-img="0.1"><img src="${src}" alt=""></div></div>`)
+    ? photos.map((src) => `<div class="photo-box"><div class="ph-in" data-plx-img="0.1"><img src="${src}" alt=""></div></div>`)
     : Array.from({ length: placeholders }, () =>
-        `<div class="ph"><div class="ph-in" data-plx-img="0.1"><span class="ph-ring"></span><span data-i18n="misc.photoSoon">${t("misc.photoSoon")}</span></div></div>`);
+        `<div class="photo-box"><div class="ph-in" data-plx-img="0.1"><span class="ph-ring"></span><span data-i18n="misc.photoSoon">${t("misc.photoSoon")}</span></div></div>`);
   return `<div class="gallery">${cells.join("")}</div>`;
+}
+
+/* Одиночный фото-блок (обложка VIP-зоны, превью на главной) */
+function photoBoxHtml(src, extraClass) {
+  const inner = src
+    ? `<div class="ph-in" data-plx-img="0.08"><img src="${src}" alt=""></div>`
+    : `<div class="ph-in" data-plx-img="0.08"><span class="ph-ring"></span><span data-i18n="misc.photoSoon">${t("misc.photoSoon")}</span></div>`;
+  return `<div class="photo-box ${extraClass || ""}">${inner}</div>`;
+}
+
+/* ---------- Фото в hero на главной ----------
+   Пока в site-data.js поле heroPhoto пустое — рисуется встроенная
+   SVG-сцена (горы на закате). Впишите путь к фото — подставится оно. */
+function applyHeroPhoto() {
+  const bg = document.getElementById("heroBg");
+  if (bg && SITE.heroPhoto) {
+    bg.innerHTML = `<img src="${SITE.heroPhoto}" alt="">`;
+  }
 }
 
 /* ---------- Акции (Главная и Меню) ---------- */
@@ -178,7 +196,7 @@ function renderVipPreview() {
   box.innerHTML = VIP_ZONES.map(
     (z) => `
     <a class="vip-mini" href="vip.html#${z.id}">
-      <span class="vip-mini-ring"></span>
+      ${photoBoxHtml(z.photos[0])}
       <h3>${z.name}</h3>
       <p class="gold">${pick(z, "badge")}</p>
       <p class="dim">${pick(z, "priceLines")[0]}</p>
@@ -193,13 +211,16 @@ function renderVipPage() {
   box.innerHTML = VIP_ZONES.map(
     (z) => `
     <article class="vip-card" id="${z.id}">
-      <div class="vip-title">
-        <h2>${z.name}</h2>
-        <span class="vip-badge">${pick(z, "badge")}</span>
+      ${photoBoxHtml(z.photos[0], "vip-cover")}
+      <div class="vip-card-in">
+        <div class="vip-title">
+          <h2>${z.name}</h2>
+          <span class="vip-badge">${pick(z, "badge")}</span>
+        </div>
+        <div class="vip-prices">${pick(z, "priceLines").map((l) => `<p>${l}</p>`).join("")}</div>
+        <ul class="vip-feats">${pick(z, "features").map((f) => `<li>${f}</li>`).join("")}</ul>
+        ${galleryHtml(z.photos.slice(1), 3)}
       </div>
-      <div class="vip-prices">${pick(z, "priceLines").map((l) => `<p>◆ ${l}</p>`).join("")}</div>
-      <ul class="vip-feats">${pick(z, "features").map((f) => `<li>${f}</li>`).join("")}</ul>
-      ${galleryHtml(z.photos, 3)}
     </article>`
   ).join("");
 }
@@ -257,6 +278,7 @@ function renderAll() {
   document.querySelectorAll("[data-book-wa]").forEach((a) => {
     a.href = waLink(pick(SITE, "bookText"));
   });
+  applyHeroPhoto();
   applySiteText();
   applyI18n();
 }
