@@ -322,25 +322,31 @@ h1 { letter-spacing: -0.04em; }
 .photo-box.dark { background: linear-gradient(155deg, var(--navy-2), var(--navy) 60%, #10131f); }
 .photo-box.dark .ph-in { color: rgba(255, 255, 255, 0.45); }
 
-/* ---------- Акции: тёмные и золотые карточки ---------- */
+/* ---------- Акции: фирменная палитра, цифра + подпись ----------
+   Чередование: тёмно-синяя с золотом → белая с обводкой → тёмно-синяя. */
 .promo-grid { display: grid; gap: 14px; }
 .promo-card {
-  border-radius: var(--r-l); padding: 30px 26px;
-  background: var(--navy); color: #fff;
-  min-height: 200px;
-  display: flex; flex-direction: column; justify-content: flex-end; gap: 8px;
+  border-radius: var(--r-l); padding: 26px;
+  background: var(--navy); color: var(--gold);
+  display: flex; flex-direction: column; gap: 10px;
   position: relative; overflow: hidden;
 }
-.promo-card:nth-child(3n+2) { background: var(--gold); color: var(--navy); }
-.promo-card:nth-child(3n+2) p { color: rgba(23, 27, 46, 0.78); }
-.promo-card::after {
-  content: ""; position: absolute; top: -60px; right: -60px;
-  width: 170px; height: 170px; border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+.promo-card::after { /* тонкое золотое кольцо — фирменная деталь тёмных карточек */
+  content: ""; position: absolute; top: -70px; right: -70px;
+  width: 180px; height: 180px; border-radius: 50%;
+  border: 1px solid rgba(201, 162, 39, 0.35);
 }
-.promo-icon { font-size: 28px; position: absolute; top: 24px; left: 26px; }
-.promo-card h3 { font-size: 23px; }
-.promo-card p { color: rgba(255, 255, 255, 0.72); font-size: 14.5px; }
+.promo-num {
+  font-size: clamp(38px, 6vw, 52px); font-weight: 600;
+  letter-spacing: -0.03em; line-height: 1;
+}
+.promo-card p { color: rgba(255, 255, 255, 0.65); font-size: 15px; line-height: 1.5; }
+.promo-card:nth-child(3n+2) {
+  background: #fff; color: var(--ink);
+  border: 1px solid var(--line);
+}
+.promo-card:nth-child(3n+2)::after { display: none; }
+.promo-card:nth-child(3n+2) p { color: rgba(0, 0, 0, 0.65); }
 @media (min-width: 700px) { .promo-grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* ---------- VIP: большие карточки с фото на весь фон ---------- */
@@ -405,9 +411,21 @@ h1 { letter-spacing: -0.04em; }
 .chip {
   flex: none; font-size: 13px; font-weight: 500; padding: 9px 18px; border-radius: 99px;
   border: 1px solid var(--line); color: var(--ink-60); white-space: nowrap;
-  background: #fff; transition: color var(--tr), background var(--tr);
+  background: #fff; cursor: pointer; font-family: var(--sans);
+  transition: color var(--tr), background var(--tr), border-color var(--tr);
 }
-.chip:hover { color: #fff; background: var(--ink); border-color: var(--ink); }
+.chip:hover { color: var(--ink); border-color: var(--ink-40); }
+.chip.on { color: #fff; background: var(--ink); border-color: var(--ink); }
+
+/* панель категории: показывается только одна, с плавным появлением */
+.menu-panel { padding: 26px 0 10px; }
+.menu-panel .sec-head { margin-bottom: 24px; }
+.fadein { animation: panelIn 0.35s ease both; }
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .fadein { animation: none; } }
 
 /* ---------- Меню: карточки блюд ---------- */
 .menu-cat { padding: 40px 0 8px; scroll-margin-top: 126px; }

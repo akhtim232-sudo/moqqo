@@ -254,16 +254,15 @@ function initReveal() {
 
 /* ---------- Акции (Главная и Меню) ---------- */
 function renderPromos() {
-  const box = document.getElementById("promoGrid");
-  if (!box) return;
-  box.innerHTML = PROMOS.map(
-    (p) => `
-    <div class="promo-card">
-      <div class="promo-icon">${p.icon}</div>
-      <h3>${pick(p, "title")}</h3>
-      <p>${pick(p, "text")}</p>
-    </div>`
-  ).join("");
+  document.querySelectorAll("[data-promos]").forEach((box) => {
+    box.innerHTML = PROMOS.map(
+      (p) => `
+      <div class="promo-card">
+        <div class="promo-num">${p.num}</div>
+        <p>${pick(p, "text")}</p>
+      </div>`
+    ).join("");
+  });
 }
 
 /* ---------- Превью VIP-зон на главной ---------- */

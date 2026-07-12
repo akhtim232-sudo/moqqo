@@ -1,8 +1,13 @@
 /* ============================================================
-   СТРАНИЦА «МЕНЮ»: рендер хитов, категорий и кнопок «+ в заказ».
-   Данные лежат в js/data/menu-data.js и js/data/hits-data.js —
-   этот файл менять не нужно.
+   СТРАНИЦА «МЕНЮ»: вкладки категорий со строгой фильтрацией —
+   на экране всегда только одна выбранная категория.
+   Порядок вкладок: Хиты → Акции → все категории из menu-data.js.
+   По умолчанию открыты «Хиты».
+   Данные лежат в js/data/*.js — этот файл менять не нужно.
    ============================================================ */
+
+/* Активная вкладка: "hits" | "promos" | id категории */
+let activeCat = "hits";
 
 /* Карточка блюда. Фото-блок есть у каждого блюда:
    если поле img заполнено — показывается фото,
@@ -39,16 +44,21 @@ function renderHits() {
   }).join("");
 }
 
-/* Навигация по категориям (чипсы) */
+/* Вкладки: Хиты, Акции, затем категории */
 function renderCatNav() {
   const box = document.getElementById("catNav");
   if (!box) return;
-  box.innerHTML = MENU_DATA.categories
-    .map((c) => `<a class="chip" href="#cat-${c.id}">${pick(c, "title")}</a>`)
-    .join("");
+  const chips = [
+    `<button class="chip" data-cat="hits">${t("chip.hits")}</button>`,
+    `<button class="chip" data-cat="promos">${t("chip.promos")}</button>`,
+    ...MENU_DATA.categories.map(
+      (c) => `<button class="chip" data-cat="${c.id}">${pick(c, "title")}</button>`
+    ),
+  ];
+  box.innerHTML = chips.join("");
 }
 
-/* Все категории */
+/* Все категории (изначально скрыты — покажет setCat) */
 function renderCategories() {
   const box = document.getElementById("menuSections");
   if (!box) return;
@@ -67,11 +77,10 @@ function renderCategories() {
         })
         .join("");
       return `
-      <section class="menu-cat" id="cat-${cat.id}">
+      <section class="menu-cat menu-panel" id="cat-${cat.id}" style="display:none">
         <div class="sec-head">
           <p class="eyebrow">${pick(cat, "subtitle")}</p>
           <h2>${pick(cat, "title")}</h2>
-          <div class="divider"><span></span><i></i><span></span></div>
         </div>
         <div class="dish-grid">${rows}</div>
       </section>`;
@@ -79,16 +88,61 @@ function renderCategories() {
     .join("");
 }
 
+/* Показать одну вкладку, остальные полностью скрыть */
+function setCat(id) {
+  activeCat = id;
+
+  // активная кнопка
+  document.querySelectorAll("#catNav .chip").forEach((c) => {
+    c.classList.toggle("on", c.dataset.cat === id);
+  });
+
+  // панели
+  const hits = document.getElementById("hitsPanel");
+  const promos = document.getElementById("promoPanel");
+  if (hits) hits.style.display = id === "hits" ? "" : "none";
+  if (promos) promos.style.display = id === "promos" ? "" : "none";
+  document.querySelectorAll(".menu-cat").forEach((s) => {
+    s.style.display = s.id === "cat-" + id ? "" : "none";
+  });
+
+  // плавное появление выбранной панели
+  const panel =
+    id === "hits" ? hits : id === "promos" ? promos : document.getElementById("cat-" + id);
+  if (panel) {
+    panel.classList.remove("fadein");
+    void panel.offsetWidth; // перезапуск анимации
+    panel.classList.add("fadein");
+  }
+
+  // активную кнопку — в зону видимости строки вкладок
+  const btn = document.querySelector('#catNav .chip[data-cat="' + id + '"]');
+  if (btn) btn.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+}
+
 function renderMenuPage() {
-  renderHits();
+  if (!document.getElementById("catNav")) return; // на главной — только хиты
   renderCatNav();
   renderCategories();
-  applyI18n();
+  setCat(activeCat); // текущая вкладка сохраняется при смене языка
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  renderHits();
   renderMenuPage();
-  document.addEventListener("langchange", renderMenuPage);
+  applyI18n();
+
+  document.addEventListener("langchange", () => {
+    renderHits();
+    renderMenuPage();
+    applyI18n();
+  });
+
+  // переключение вкладок
+  document.addEventListener("click", (e) => {
+    const chip = e.target.closest("#catNav .chip");
+    if (chip) setCat(chip.dataset.cat);
+  });
 
   // «+ в заказ» (делегирование — работает после перерисовок)
   document.addEventListener("click", (e) => {

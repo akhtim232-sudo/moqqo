@@ -32,6 +32,7 @@ const I18N = {
 
     // Заголовки блоков
     "sec.promos": "Акции",
+    "sec.promosSub": "Выгодно сегодня",
     "sec.hits": "Хиты сезона",
     "sec.hitsSub": "Выбор гостей",
     "sec.vip": "VIP-зоны",
@@ -56,6 +57,10 @@ const I18N = {
     "c.insta": "Instagram",
     "c.delivery": "Доставка",
     "c.hours": "Часы работы",
+
+    // Вкладки меню
+    "chip.hits": "Хиты",
+    "chip.promos": "Акции",
 
     // Главная (новые блоки)
     "sec.about": "Знакомьтесь, Moqqo.",
@@ -98,6 +103,7 @@ const I18N = {
 
     // Заголовки блоков
     "sec.promos": "Акциялар",
+    "sec.promosSub": "Бүгін тиімді",
     "sec.hits": "Маусым хиттері",
     "sec.hitsSub": "Қонақтар таңдауы",
     "sec.vip": "VIP аймақтар",
@@ -122,6 +128,10 @@ const I18N = {
     "c.insta": "Instagram",
     "c.delivery": "Жеткізу",
     "c.hours": "Жұмыс уақыты",
+
+    // Вкладки меню
+    "chip.hits": "Хиттер",
+    "chip.promos": "Акциялар",
 
     // Главная (новые блоки)
     "sec.about": "Танысыңыз, Moqqo.",
