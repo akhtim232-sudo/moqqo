@@ -40,7 +40,13 @@ const VIP_ZONES = [
       "Жеке дәретхана және гардероб",
       "Жеке кіреберіс",
     ],
-    photos: ["img/photos/vip1-1.jpg"], // первое фото — обложка карточки
+    // первое фото — обложка карточки, остальные — галерея
+    photos: [
+      "img/photos/vip1-1.jpg",
+      "img/photos/vip1-2.jpg",
+      "img/photos/vip1-3.jpg",
+      "img/photos/vip1-4.jpg",
+    ],
   },
   {
     id: "vip2",
@@ -65,7 +71,10 @@ const VIP_ZONES = [
       "Жеке дәретхана",
       "Караоке-жүйе",
     ],
-    photos: [],
+    photos: [
+      "img/photos/vip2-1.jpg",
+      "img/photos/vip2-2.jpg",
+    ],
   },
   {
     id: "vip3",
@@ -86,6 +95,6 @@ const VIP_ZONES = [
       "7 адамға арналған жайлы зал",
       "Жақын адамдармен отырыстарға",
     ],
-    photos: [],
+    photos: ["img/photos/vip3-1.jpg"],
   },
 ];

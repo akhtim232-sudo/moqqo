@@ -613,6 +613,10 @@ h1 { letter-spacing: -0.04em; }
 .d4 { width: 380px; height: 380px; top: 5%; right: 8%; }
 .d5 { width: 240px; height: 240px; bottom: 4%; left: -60px; }
 
+/* узкая галерея из одного фото (страница вакансий) */
+.gallery-single .gallery { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto 30px; }
+.gallery-single .photo-box { aspect-ratio: 4 / 5; }
+
 /* ---------- Работа у нас ---------- */
 .roles { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 26px 0 34px; }
 .role {

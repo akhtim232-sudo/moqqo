@@ -103,7 +103,18 @@ const SITE = {
     titleKz: "Негізгі зал",
     text: "Уютный зал с мягким светом и живой атмосферой. Днём — деловые обеды и счастливые часы, вечером — караоке и коктейли.",
     textKz: "Жұмсақ жарық пен жанды атмосферасы бар жайлы зал. Күндіз — іскерлік түскі ас пен бақытты сағаттар, кешке — караоке мен коктейльдер.",
-    photos: [], // пути к фото зала, например "img/photos/hall-1.jpg"
+    photos: [
+      "img/photos/hall-1.jpg",
+      "img/photos/hall-2.jpg",
+      "img/photos/hall-3.jpg",
+      "img/photos/hall-4.jpg",
+      "img/photos/hall-5.jpg",
+      "img/photos/hall-6.jpg",
+      "img/photos/hall-7.jpg",
+      "img/photos/hall-8.jpg",
+      "img/photos/hall-9.jpg",
+      "img/photos/hall-10.jpg",
+    ],
   },
   letnik: {
     title: "Летник под открытым небом",
@@ -128,6 +139,7 @@ const SITE = {
     titleKz: "Командаға іздейміз",
     roles: ["Официантов", "Поваров", "Барменов"],
     rolesKz: ["Даяшыларды", "Аспаздарды", "Бармендерді"],
+    photos: ["img/photos/team-1.jpg"], // фото команды на странице вакансий
     waText: "Здравствуйте! Хочу узнать о вакансиях в Moqqo Restobar",
     waTextKz: "Сәлеметсіз бе! Moqqo Restobar-дағы бос орындар туралы білгім келеді",
   },

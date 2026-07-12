@@ -298,7 +298,7 @@ function renderVipPage() {
         </div>
         <div class="vip-prices">${pick(z, "priceLines").map((l) => `<p>${l}</p>`).join("")}</div>
         <ul class="vip-feats">${pick(z, "features").map((f) => `<li>${f}</li>`).join("")}</ul>
-        ${galleryHtml(z.photos.slice(1), 3)}
+        ${z.photos.length > 1 ? galleryHtml(z.photos.slice(1), 0) : ""}
       </div>
     </article>`
   ).join("");
