@@ -177,6 +177,10 @@ function initHeroMedia() {
   v.addEventListener("canplay", () => {
     box.innerHTML = ""; box.appendChild(v);
     v.play().catch(() => {});
+    // если вкладка была в фоне — запустить при возврате
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && v.paused) v.play().catch(() => {});
+    });
   }, { once: true });
   v.addEventListener("error", () => {
     const img = new Image();
