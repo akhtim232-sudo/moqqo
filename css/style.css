@@ -364,7 +364,7 @@ h1 { letter-spacing: -0.04em; }
 .vip-big .ph-in { justify-content: flex-start; padding-top: 56px; }
 .vip-big::before {
   content: ""; position: absolute; inset: 0; z-index: 0;
-  background: linear-gradient(180deg, transparent 35%, rgba(10, 12, 22, 0.62));
+  background: linear-gradient(180deg, rgba(10, 12, 22, 0.05) 20%, rgba(10, 12, 22, 0.35) 55%, rgba(10, 12, 22, 0.78));
 }
 .vip-big-overlay { position: relative; z-index: 1; padding: 24px 22px; color: #fff; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .vip-big-overlay h3 { font-size: clamp(26px, 4vw, 34px); }
