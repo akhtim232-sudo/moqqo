@@ -5,6 +5,32 @@
    все данные лежат в js/data/*.js
    ============================================================ */
 
+/* ---------- Тема (светлая/тёмная) ----------
+   Тема применяется ещё в <head> инлайн-скриптом (без вспышки белым).
+   Здесь — переключение, сохранение и подпись в мобильном меню. */
+const Theme = {
+  current() { return document.documentElement.dataset.theme || "light"; },
+  stored() { try { return localStorage.getItem("moqqo_theme"); } catch (e) { return null; } },
+  apply(theme, save, animate) {
+    const root = document.documentElement;
+    if (animate && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      root.classList.add("theme-anim");
+      clearTimeout(Theme._t);
+      Theme._t = setTimeout(() => root.classList.remove("theme-anim"), 260);
+    }
+    root.dataset.theme = theme;
+    if (save) { try { localStorage.setItem("moqqo_theme", theme); } catch (e) {} }
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = theme === "dark" ? "#0e1126" : "#f5f5f5";
+    Theme.refreshLabels();
+  },
+  toggle() { Theme.apply(Theme.current() === "dark" ? "light" : "dark", true, true); },
+  refreshLabels() {
+    const key = Theme.current() === "dark" ? "theme.light" : "theme.dark";
+    document.querySelectorAll("[data-theme-label]").forEach((el) => { el.textContent = t(key); });
+  },
+};
+
 /* ---------- Язык ---------- */
 const Lang = {
   get() { return localStorage.getItem("moqqo_lang") || "ru"; },
@@ -281,7 +307,7 @@ function renderVipPreview() {
         <h3>${z.name}</h3>
         <p class="vip-line">${pick(z, "badge")} · ${pick(z, "features")[0]}</p>
         <p class="vip-price">${pick(z, "priceLines")[0]}</p>
-        <span class="btn"><span data-i18n="btn.more">${t("btn.more")}</span><span class="arr">→</span></span>
+        <span class="btn btn-on-photo"><span data-i18n="btn.more">${t("btn.more")}</span><span class="arr">→</span></span>
       </div>
     </a>`
   ).join("");
@@ -377,6 +403,16 @@ document.addEventListener("DOMContentLoaded", () => {
     b.addEventListener("click", () => Lang.set(b.dataset.lang));
   });
 
+  // переключатель темы (шапка + мобильное меню)
+  document.querySelectorAll("[data-theme-toggle]").forEach((b) => {
+    b.addEventListener("click", () => Theme.toggle());
+  });
+  Theme.apply(Theme.current(), false, false); // синхронизировать meta и подписи
+  // если пользователь не выбирал тему — следовать за системной
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    if (!Theme.stored()) Theme.apply(e.matches ? "dark" : "light", false, true);
+  });
+
   // бургер-меню
   const burger = document.getElementById("burger");
   const nav = document.getElementById("mainNav");
@@ -403,7 +439,10 @@ document.addEventListener("DOMContentLoaded", () => {
     onS();
   }
 
-  document.addEventListener("langchange", renderAll);
+  document.addEventListener("langchange", () => {
+    renderAll();
+    Theme.refreshLabels(); // подпись «Тёмный/Светлый режим» на новом языке
+  });
 });
 
 /* ---------- PWA: service worker ---------- */

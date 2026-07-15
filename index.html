@@ -6,6 +6,7 @@
 <title>Moqqo Restobar — Экибастуз | Шашлык на углях, караоке, VIP-зоны</title>
 <meta name="description" content="Moqqo Restobar в Экибастузе: шашлык на углях, караоке до 01:00, три VIP-зоны и летник на 90 гостей. Ул. Алии Молдагуловой, 78А.">
 <meta name="theme-color" content="#f5f5f5">
+<script>(function(){try{var t=localStorage.getItem("moqqo_theme");if(!t){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==="dark"?"#0e1126":"#f5f5f5"}catch(e){}})();</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="img/icon-192.png">
 <link rel="apple-touch-icon" href="img/icon-192.png">
@@ -32,9 +33,14 @@
       <a href="hall.html" data-i18n="nav.hall"></a>
       <a href="about.html" data-i18n="nav.about"></a>
       <a href="jobs.html" data-i18n="nav.jobs"></a>
+      <button class="nav-theme" data-theme-toggle><span data-theme-label></span></button>
     </nav>
     <div class="header-right">
       <a class="book-pill" data-book-wa href="#" target="_blank" rel="noopener" data-i18n="btn.bookShort"></a>
+      <button class="theme-btn" data-theme-toggle aria-label="Переключить тему">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.8 6.8 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
       <div class="lang-switch" role="group" aria-label="Язык">
         <button class="lang-btn" data-lang="ru">RU</button>
         <button class="lang-btn" data-lang="kz">KZ</button>
@@ -57,7 +63,7 @@
       <div class="hero-overlay">
         <h1 data-site="heroTitle"></h1>
         <p class="hero-sub" data-site="heroSub"></p>
-        <a class="btn" data-book-wa href="#" target="_blank" rel="noopener"><span data-i18n="btn.bookShort"></span><span class="arr">→</span></a>
+        <a class="btn btn-on-photo" data-book-wa href="#" target="_blank" rel="noopener"><span data-i18n="btn.bookShort"></span><span class="arr">→</span></a>
       </div>
       <div class="marquee"><div class="marquee-track" data-marquee="marquee1"></div></div>
     </div>

@@ -58,6 +58,10 @@ const I18N = {
     "c.delivery": "Доставка",
     "c.hours": "Часы работы",
 
+    // Тема
+    "theme.dark": "Тёмный режим",
+    "theme.light": "Светлый режим",
+
     // Вкладки меню
     "chip.hits": "Хиты",
     "chip.promos": "Акции",
@@ -128,6 +132,10 @@ const I18N = {
     "c.insta": "Instagram",
     "c.delivery": "Жеткізу",
     "c.hours": "Жұмыс уақыты",
+
+    // Тема
+    "theme.dark": "Қараңғы режим",
+    "theme.light": "Жарық режим",
 
     // Вкладки меню
     "chip.hits": "Хиттер",
