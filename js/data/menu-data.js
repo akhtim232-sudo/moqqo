@@ -62,19 +62,19 @@ const MENU_DATA = {
       subtitle: "Свежие и тёплые",          // подзаголовок (рус)
       subtitleKz: "Балғын және жылы",            // подзаголовок (каз)
       items: [
-        { id: "salaty-1", name: "Цезарь с креветками", price: "3 180 ₸", desc: "Айсберг, соус цезарь, черри, креветки, пармезан, крутоны, перепелиное яйцо", img: "" },
-        { id: "salaty-2", name: "Цезарь с сёмгой", price: "3 280 ₸", desc: "Айсберг, соус цезарь, черри, лосось с/с, пармезан, крутоны", img: "" },
+        { id: "salaty-1", name: "Цезарь с креветками", price: "3 180 ₸", desc: "Айсберг, соус цезарь, черри, креветки, пармезан, крутоны, перепелиное яйцо", img: "img/dishes/salaty-tsezar-s-krevetkami.jpg" },
+        { id: "salaty-2", name: "Цезарь с сёмгой", price: "3 280 ₸", desc: "Айсберг, соус цезарь, черри, лосось с/с, пармезан, крутоны", img: "img/dishes/salaty-tsezar-s-semgoy.jpg" },
         { id: "salaty-3", name: "Цезарь с курицей", price: "2 590 ₸", desc: "Айсберг, соус цезарь, черри, куриное филе, пармезан, крутоны", img: "" },
-        { id: "salaty-4", name: "Хрустящие баклажаны", price: "3 200 ₸", desc: "Баклажаны, помидоры, микс салата, творожный сыр, кедровые орехи", img: "" },
-        { id: "salaty-5", name: "Греческий", price: "2 390 ₸", desc: "Помидоры, огурцы, перец, оливки, маслины, фета, лимонный дрессинг", img: "" },
-        { id: "salaty-6", name: "Тёплый с телятиной", price: "3 290 ₸", desc: "Микс салата, телятина, баклажаны, черри, кедровые орехи, бальзамик", img: "", tag: "Шеф" },
-        { id: "salaty-7", name: "Тёплый с курицей", price: "2 990 ₸", desc: "Рукола, черри, куриное филе, баклажаны, соус кимчи и терияки", img: "" },
-        { id: "salaty-8", name: "Шейх", price: "3 800 ₸", desc: "Телятина, шампиньоны, черри, корнишоны, зелень, соевый соус", img: "" },
+        { id: "salaty-4", name: "Хрустящие баклажаны", price: "3 200 ₸", desc: "Баклажаны, помидоры, микс салата, творожный сыр, кедровые орехи", img: "img/dishes/salaty-hrustyaschie-baklazhany.jpg" },
+        { id: "salaty-5", name: "Греческий", price: "2 390 ₸", desc: "Помидоры, огурцы, перец, оливки, маслины, фета, лимонный дрессинг", img: "img/dishes/salaty-grecheskiy.jpg" },
+        { id: "salaty-6", name: "Тёплый с телятиной", price: "3 290 ₸", desc: "Микс салата, телятина, баклажаны, черри, кедровые орехи, бальзамик", img: "img/dishes/salaty-teplyy-s-telyatinoy.jpg", tag: "Шеф" },
+        { id: "salaty-7", name: "Тёплый с курицей", price: "2 990 ₸", desc: "Рукола, черри, куриное филе, баклажаны, соус кимчи и терияки", img: "img/dishes/salaty-teplyy-s-kuritsey.jpg" },
+        { id: "salaty-8", name: "Шейх", price: "3 800 ₸", desc: "Телятина, шампиньоны, черри, корнишоны, зелень, соевый соус", img: "img/dishes/salaty-sheyh.jpg" },
         { id: "salaty-9", name: "GUZEL", price: "3 800 ₸", desc: "Говяжий язык, шампиньоны, черри, корнишоны, зелень, соевый соус", img: "" },
-        { id: "salaty-10", name: "Балканский", price: "3 900 ₸", desc: "Говядина, шампиньоны, корнишоны, перец, черри, кунжутное масло", img: "" },
-        { id: "salaty-11", name: "Восточный", price: "3 300 ₸", desc: "Говядина, шампиньоны, цветная капуста, черри, сыр гольбани, руккола", img: "" },
+        { id: "salaty-10", name: "Балканский", price: "3 900 ₸", desc: "Говядина, шампиньоны, корнишоны, перец, черри, кунжутное масло", img: "img/dishes/salaty-balkanskiy.jpg" },
+        { id: "salaty-11", name: "Восточный", price: "3 300 ₸", desc: "Говядина, шампиньоны, цветная капуста, черри, сыр гольбани, руккола", img: "img/dishes/salaty-vostochnyy.jpg" },
         { id: "salaty-12", name: "Восхитительный", price: "3 300 ₸", desc: "Баклажаны, перец, телятина, помидоры, фасоль, майонез с чесноком", img: "" },
-        { id: "salaty-13", name: "Ачучук", price: "1 500 ₸", desc: "", img: "" },
+        { id: "salaty-13", name: "Ачучук", price: "1 500 ₸", desc: "", img: "img/dishes/salaty-achuchuk.jpg" },
       ]
     },
 
@@ -86,16 +86,16 @@ const MENU_DATA = {
       subtitle: "Согревающие",          // подзаголовок (рус)
       subtitleKz: "Жылытатын",            // подзаголовок (каз)
       items: [
-        { id: "supy-1", name: "Том Ям с морепродуктами", price: "3 990 ₸", desc: "", img: "" },
-        { id: "supy-2", name: "Уха по-царски", price: "3 200 ₸", desc: "", img: "" },
-        { id: "supy-3", name: "Шорпа из баранины", price: "3 600 ₸", desc: "", img: "" },
-        { id: "supy-4", name: "Грибной крем-суп", price: "2 300 ₸", desc: "", img: "" },
-        { id: "supy-5", name: "Рамен с говядиной", price: "2 790 ₸", desc: "", img: "" },
-        { id: "supy-6", name: "Рамен с курицей", price: "2 690 ₸", desc: "", img: "" },
-        { id: "supy-7", name: "Чечевичный суп", price: "2 200 ₸", desc: "", img: "" },
-        { id: "supy-8", name: "Пельмени по-домашнему", price: "2 400 ₸", desc: "", img: "" },
-        { id: "supy-9", name: "Кеспе из курицы", price: "1 900 ₸", desc: "", img: "" },
-        { id: "supy-10", name: "Окрошка (сезонная)", price: "1 800 ₸", desc: "", img: "" },
+        { id: "supy-1", name: "Том Ям с морепродуктами", price: "3 990 ₸", desc: "", img: "img/dishes/supy-tom-yam-s-moreproduktami.jpg" },
+        { id: "supy-2", name: "Уха по-царски", price: "3 200 ₸", desc: "", img: "img/dishes/supy-uha-po-tsarski.jpg" },
+        { id: "supy-3", name: "Шорпа из баранины", price: "3 600 ₸", desc: "", img: "img/dishes/supy-shorpa-iz-baraniny.jpg" },
+        { id: "supy-4", name: "Грибной крем-суп", price: "2 300 ₸", desc: "", img: "img/dishes/supy-gribnoy-krem-sup.jpg" },
+        { id: "supy-5", name: "Рамен с говядиной", price: "2 790 ₸", desc: "", img: "img/dishes/supy-ramen-s-govyadinoy.jpg" },
+        { id: "supy-6", name: "Рамен с курицей", price: "2 690 ₸", desc: "", img: "img/dishes/supy-ramen-s-kuritsey.jpg" },
+        { id: "supy-7", name: "Чечевичный суп", price: "2 200 ₸", desc: "", img: "img/dishes/supy-chechevichnyy-sup.jpg" },
+        { id: "supy-8", name: "Пельмени по-домашнему", price: "2 400 ₸", desc: "", img: "img/dishes/supy-pelmeni-po-domashnemu.jpg" },
+        { id: "supy-9", name: "Кеспе из курицы", price: "1 900 ₸", desc: "", img: "img/dishes/supy-kespe-iz-kuritsy.jpg" },
+        { id: "supy-10", name: "Окрошка (сезонная)", price: "1 800 ₸", desc: "", img: "img/dishes/supy-okroshka-sezonnaya.jpg" },
       ]
     },
 
@@ -107,27 +107,27 @@ const MENU_DATA = {
       subtitle: "Стейки, рыба, гриль",          // подзаголовок (рус)
       subtitleKz: "Стейктер, балық, гриль",            // подзаголовок (каз)
       items: [
-        { id: "goryachee-1", name: "Комбо: Плов + морс", price: "2 000 ₸", desc: "Узбекский плов с домашним морсом на выбор — выгодный обед", img: "", tag: "Комбо" },
-        { id: "goryachee-2", name: "Стейк из сёмги в сливочном соусе", price: "8 000 ₸", desc: "Подаётся с рисом и красной икрой", img: "", tag: "Шеф" },
-        { id: "goryachee-3", name: "Стейк Тибон", price: "9 800 ₸", desc: "", img: "" },
-        { id: "goryachee-4", name: "Стейк Рибай", price: "9 800 ₸", desc: "", img: "" },
-        { id: "goryachee-5", name: "Утиная грудка в ягодном соусе", price: "3 790 ₸", desc: "Тающая во рту, медово-горчичный маринад", img: "" },
-        { id: "goryachee-6", name: "Говядина по-строгановски", price: "3 290 ₸", desc: "Говяжья вырезка с грибами в сливочном соусе, картофельное пюре", img: "" },
-        { id: "goryachee-7", name: "Филе миньон в перечном соусе", price: "3 790 ₸", desc: "", img: "" },
-        { id: "goryachee-8", name: "Судак на жаровне", price: "3 190 ₸", desc: "Белая речная рыба с миксом овощей", img: "" },
-        { id: "goryachee-9", name: "Сибас", price: "6 000 ₸", desc: "", img: "" },
-        { id: "goryachee-10", name: "Телятина с овощами", price: "3 190 ₸", desc: "Вырезка, обжаренная с овощами и паназиатским соусом", img: "" },
-        { id: "goryachee-11", name: "Куриное филе с соусом карри", price: "3 190 ₸", desc: "Соус на кокосовом молоке, подаётся с рисом", img: "" },
-        { id: "goryachee-12", name: "Курица с овощами", price: "3 000 ₸", desc: "", img: "" },
-        { id: "goryachee-13", name: "Куырдак говядина", price: "3 200 ₸", desc: "", img: "" },
-        { id: "goryachee-14", name: "Сокоро", price: "3 800 ₸", desc: "Говядина, лук, рис", img: "" },
-        { id: "goryachee-15", name: "Манты на пару", price: "2 700 ₸", desc: "", img: "" },
-        { id: "goryachee-16", name: "Манты жареные", price: "3 100 ₸", desc: "", img: "" },
-        { id: "goryachee-17", name: "Жареные карасі", price: "2 600 ₸", desc: "", img: "" },
-        { id: "goryachee-18", name: "Лагман Цомян", price: "3 200 ₸", desc: "", img: "" },
-        { id: "goryachee-19", name: "Лагман Гуйру", price: "3 200 ₸", desc: "", img: "" },
-        { id: "goryachee-20", name: "Казан кебаб (баранина)", price: "3 200 ₸", desc: "", img: "" },
-        { id: "goryachee-21", name: "Казан кебаб (курица)", price: "3 200 ₸", desc: "", img: "" },
+        { id: "goryachee-1", name: "Комбо: Плов + морс", price: "2 000 ₸", desc: "Узбекский плов с домашним морсом на выбор — выгодный обед", img: "img/dishes/goryachee-kombo-plov-mors.jpg", tag: "Комбо" },
+        { id: "goryachee-2", name: "Стейк из сёмги в сливочном соусе", price: "8 000 ₸", desc: "Подаётся с рисом и красной икрой", img: "img/dishes/goryachee-steyk-iz-semgi-v-slivochnom-souse.jpg", tag: "Шеф" },
+        { id: "goryachee-3", name: "Стейк Тибон", price: "9 800 ₸", desc: "", img: "img/dishes/goryachee-steyk-tibon.jpg" },
+        { id: "goryachee-4", name: "Стейк Рибай", price: "9 800 ₸", desc: "", img: "img/dishes/goryachee-steyk-ribay.jpg" },
+        { id: "goryachee-5", name: "Утиная грудка в ягодном соусе", price: "3 790 ₸", desc: "Тающая во рту, медово-горчичный маринад", img: "img/dishes/goryachee-utinaya-grudka-v-yagodnom-souse.jpg" },
+        { id: "goryachee-6", name: "Говядина по-строгановски", price: "3 290 ₸", desc: "Говяжья вырезка с грибами в сливочном соусе, картофельное пюре", img: "img/dishes/goryachee-govyadina-po-stroganovski.jpg" },
+        { id: "goryachee-7", name: "Филе миньон в перечном соусе", price: "3 790 ₸", desc: "", img: "img/dishes/goryachee-file-minon-v-perechnom-souse.jpg" },
+        { id: "goryachee-8", name: "Судак на жаровне", price: "3 190 ₸", desc: "Белая речная рыба с миксом овощей", img: "img/dishes/goryachee-sudak-na-zharovne.jpg" },
+        { id: "goryachee-9", name: "Сибас", price: "6 000 ₸", desc: "", img: "img/dishes/goryachee-sibas.jpg" },
+        { id: "goryachee-10", name: "Телятина с овощами", price: "3 190 ₸", desc: "Вырезка, обжаренная с овощами и паназиатским соусом", img: "img/dishes/goryachee-telyatina-s-ovoschami.jpg" },
+        { id: "goryachee-11", name: "Куриное филе с соусом карри", price: "3 190 ₸", desc: "Соус на кокосовом молоке, подаётся с рисом", img: "img/dishes/goryachee-kurinoe-file-s-sousom-karri.jpg" },
+        { id: "goryachee-12", name: "Курица с овощами", price: "3 000 ₸", desc: "", img: "img/dishes/goryachee-kuritsa-s-ovoschami.jpg" },
+        { id: "goryachee-13", name: "Куырдак говядина", price: "3 200 ₸", desc: "", img: "img/dishes/goryachee-kuyrdak-govyadina.jpg" },
+        { id: "goryachee-14", name: "Сокоро", price: "3 800 ₸", desc: "Говядина, лук, рис", img: "img/dishes/goryachee-sokoro.jpg" },
+        { id: "goryachee-15", name: "Манты на пару", price: "2 700 ₸", desc: "", img: "img/dishes/goryachee-manty-na-paru.jpg" },
+        { id: "goryachee-16", name: "Манты жареные", price: "3 100 ₸", desc: "", img: "img/dishes/goryachee-manty-zharenye.jpg" },
+        { id: "goryachee-17", name: "Жареные карасі", price: "2 600 ₸", desc: "", img: "img/dishes/goryachee-zharenye-karasi.jpg" },
+        { id: "goryachee-18", name: "Лагман Цомян", price: "3 200 ₸", desc: "", img: "img/dishes/goryachee-lagman-tsomyan.jpg" },
+        { id: "goryachee-19", name: "Лагман Гуйру", price: "3 200 ₸", desc: "", img: "img/dishes/goryachee-lagman-guyru.jpg" },
+        { id: "goryachee-20", name: "Казан кебаб (баранина)", price: "3 200 ₸", desc: "", img: "img/dishes/goryachee-kazan-kebab-baranina.jpg" },
+        { id: "goryachee-21", name: "Казан кебаб (курица)", price: "3 200 ₸", desc: "", img: "img/dishes/goryachee-kazan-kebab-kuritsa.jpg" },
       ]
     },
 
@@ -139,14 +139,14 @@ const MENU_DATA = {
       subtitle: "На живом огне",          // подзаголовок (рус)
       subtitleKz: "Ашық отта",            // подзаголовок (каз)
       items: [
-        { id: "shashlyk-1", name: "Шашлык Баранина", price: "5 100 ₸", desc: "", img: "" },
-        { id: "shashlyk-2", name: "Шашлык Утка", price: "3 500 ₸", desc: "", img: "" },
-        { id: "shashlyk-3", name: "Шашлык телятина с курдюком", price: "3 800 ₸", desc: "", img: "" },
-        { id: "shashlyk-4", name: "Шашлык Люля кебаб", price: "3 300 ₸", desc: "", img: "" },
-        { id: "shashlyk-5", name: "Шашлык из куриного филе", price: "3 200 ₸", desc: "", img: "" },
-        { id: "shashlyk-6", name: "Шашлык из куриного крыла", price: "3 100 ₸", desc: "", img: "" },
-        { id: "shashlyk-7", name: "Шашлык из куриного бедра", price: "3 100 ₸", desc: "", img: "" },
-        { id: "shashlyk-8", name: "Печень с курдюком на мангале", price: "2 900 ₸", desc: "", img: "" },
+        { id: "shashlyk-1", name: "Шашлык Баранина", price: "5 100 ₸", desc: "", img: "img/dishes/shashlyk-baranina.jpg" },
+        { id: "shashlyk-2", name: "Шашлык Утка", price: "3 500 ₸", desc: "", img: "img/dishes/shashlyk-utka.jpg" },
+        { id: "shashlyk-3", name: "Шашлык телятина с курдюком", price: "3 800 ₸", desc: "", img: "img/dishes/shashlyk-telyatina-s-kurdyukom.jpg" },
+        { id: "shashlyk-4", name: "Шашлык Люля кебаб", price: "3 300 ₸", desc: "", img: "img/dishes/shashlyk-lyulya-kebab.jpg" },
+        { id: "shashlyk-5", name: "Шашлык из куриного филе", price: "3 200 ₸", desc: "", img: "img/dishes/shashlyk-iz-kurinogo-file.jpg" },
+        { id: "shashlyk-6", name: "Шашлык из куриного крыла", price: "3 100 ₸", desc: "", img: "img/dishes/shashlyk-iz-kurinogo-kryla.jpg" },
+        { id: "shashlyk-7", name: "Шашлык из куриного бедра", price: "3 100 ₸", desc: "", img: "img/dishes/shashlyk-iz-kurinogo-bedra.jpg" },
+        { id: "shashlyk-8", name: "Печень с курдюком на мангале", price: "2 900 ₸", desc: "", img: "img/dishes/shashlyk-pechen-s-kurdyukom-na-mangale.jpg" },
       ]
     },
 
@@ -158,10 +158,10 @@ const MENU_DATA = {
       subtitle: "С мангала",          // подзаголовок (рус)
       subtitleKz: "Мангалдан",            // подзаголовок (каз)
       items: [
-        { id: "kolbaski-1", name: "Ассорти из колбасок", price: "9 690 ₸", desc: "", img: "" },
-        { id: "kolbaski-2", name: "Колбаски из говядины", price: "3 990 ₸", desc: "", img: "" },
-        { id: "kolbaski-3", name: "Колбаски из баранины", price: "3 890 ₸", desc: "", img: "" },
-        { id: "kolbaski-4", name: "Колбаски из курицы", price: "3 690 ₸", desc: "", img: "" },
+        { id: "kolbaski-1", name: "Ассорти из колбасок", price: "9 690 ₸", desc: "", img: "img/dishes/kolbaski-assorti-iz-kolbasok.jpg" },
+        { id: "kolbaski-2", name: "Колбаски из говядины", price: "3 990 ₸", desc: "", img: "img/dishes/kolbaski-iz-govyadiny.jpg" },
+        { id: "kolbaski-3", name: "Колбаски из баранины", price: "3 890 ₸", desc: "", img: "img/dishes/kolbaski-iz-baraniny.jpg" },
+        { id: "kolbaski-4", name: "Колбаски из курицы", price: "3 690 ₸", desc: "", img: "img/dishes/kolbaski-iz-kuritsy.jpg" },
       ]
     },
 

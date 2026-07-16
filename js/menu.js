@@ -14,7 +14,7 @@ let activeCat = "hits";
    если пустое — аккуратная заглушка с кольцом логотипа. */
 function dishCard(item) {
   const photo = item.img
-    ? `<div class="photo-box"><div class="ph-in"><img src="${item.img}" alt="${item.name}" loading="lazy"></div></div>`
+    ? `<div class="photo-box"><div class="ph-in"><img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" width="900" height="563"></div></div>`
     : `<div class="photo-box"><div class="ph-in"><span class="ph-ring"></span><span data-i18n="misc.photoSoon">${t("misc.photoSoon")}</span></div></div>`;
   const tag = item.tag ? `<span class="chef-tag">${item.tag}</span>` : "";
   const note = item.note ? `<span class="dish-note">${item.note}</span>` : "";
