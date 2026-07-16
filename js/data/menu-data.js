@@ -299,7 +299,7 @@ const MENU_DATA = {
         { id: "bar-38", name: "Whiskey Sour · Gin Sour", price: "2 500 ₸", desc: "", img: "img/dishes/bar-whiskey-sour-gin-sour.jpg", group: "Коктейли", groupKz: "Коктейльдер" },
         { id: "bar-39", name: "Manhattan", price: "2 300 ₸", desc: "", img: "img/dishes/bar-manhattan.jpg", group: "Коктейли", groupKz: "Коктейльдер" },
         { id: "bar-40", name: "Bloody Mary · Apple Tini", price: "2 300 ₸", desc: "", img: "img/dishes/bar-bloody-mary-apple-tini.jpg", group: "Коктейли", groupKz: "Коктейльдер" },
-        { id: "bar-41", name: "Smoked Negroni", price: "2 000 ₸", desc: "", img: "", group: "Коктейли", groupKz: "Коктейльдер" },
+        { id: "bar-41", name: "Smoked Negroni", price: "2 000 ₸", desc: "", img: "img/dishes/bar-smoked-negroni.jpg", group: "Коктейли", groupKz: "Коктейльдер" },
       ]
     },
 
