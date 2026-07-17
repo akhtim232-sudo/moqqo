@@ -750,3 +750,95 @@ html[data-theme="dark"] .foot-card { border: 1px solid var(--line); }
 .foot-grid .contact-card .gold-link { color: var(--gold-soft); border-bottom-color: rgba(232, 201, 92, 0.4); }
 @media (min-width: 700px) { .foot-grid { grid-template-columns: repeat(3, 1fr); } }
 .copyright { text-align: center; color: rgba(255, 255, 255, 0.62); font-size: 12.5px; margin-top: 30px; }
+
+/* ============================================================
+   УГЛОВАЯ LED-ЛАМПА — вертикальная световая полоса у правого
+   верхнего угла. Разгорается при прокрутке, затухает в покое.
+   Слой строго ПОД контентом (z-0), контент приподнят на z-1.
+   Анимируются только transform и opacity (JS: initLamp).
+   ============================================================ */
+
+/* контент поверх лампы; fixed-элементы (шапка, корзина, оверлеи)
+   уже позиционированы со своими z-index и не затрагиваются */
+body > section, body > footer, body > div.wrap, body > div.marquee-band {
+  position: relative; z-index: 1;
+}
+
+.lamp-layer {
+  /* z-index:-1 — двойная гарантия «за контентом»: слой выше фона страницы,
+     но ниже любого потока, даже без поднятия секций на z-1 */
+  position: fixed; inset: 0; z-index: -1;
+  pointer-events: none; overflow: hidden;
+}
+.lamp-rig {
+  position: absolute; top: 10vh; right: 6vw;
+  width: 3px; height: 55vh;
+  will-change: transform;
+}
+/* сама планка светильника */
+.lamp-bar {
+  position: absolute; inset: 0;
+  background: #1a1a1c; border-radius: 2px;
+}
+/* a) яркая линия света */
+.lamp-core {
+  position: absolute; top: 0; right: -4px;
+  width: 10px; height: 100%;
+  background: linear-gradient(180deg, #ffd9a8, #ff8a3d 60%, #ffb56b);
+  filter: blur(6px);
+  opacity: calc(var(--lamp-i, 0.15) * 0.9);
+  will-change: opacity, transform;
+}
+/* b) вертикальный ореол */
+.lamp-halo {
+  position: absolute; top: -5%; right: -110px;
+  width: 230px; height: 110%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(255, 138, 61, 0.55), transparent 70%);
+  filter: blur(60px);
+  opacity: calc(var(--lamp-i, 0.15) * 0.8);
+  transform: scale(calc(1 + var(--lamp-i, 0.15) * 0.15));
+  will-change: opacity, transform;
+}
+/* c) широкая засветка на «стену» страницы */
+.lamp-wash {
+  position: absolute; top: -25vh; right: -450px;
+  width: 950px; height: 110vh;
+  background: radial-gradient(45% 50% at 55% 45%, rgba(255, 92, 26, 0.12), transparent 70%);
+  filter: blur(140px);
+  opacity: var(--lamp-i, 0.15);
+  transform: scale(calc(1 + var(--lamp-i, 0.15) * 0.15));
+  will-change: opacity, transform;
+}
+@media (max-width: 700px) {
+  .lamp-rig { height: 40vh; right: 4vw; }
+  .lamp-wash { opacity: calc(var(--lamp-i, 0.15) * 0.5); }
+}
+
+/* --- луч задевает контент: тёплая кромка на стороне к лампе.
+       --ln (0..1, близость×интенсивность) и --la (угол) ставит JS --- */
+.card-dark::before, .promo-card::before, .foot-card::before, .feature-card::before,
+.faq-item::before, .vip-card::before, .contact-card::before, .card-wide::before, .vip-big::after {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  border-radius: inherit; pointer-events: none;
+  padding: 1px;
+  background: linear-gradient(calc(var(--la, 45) * 1deg),
+    transparent 52%, rgba(255, 138, 61, 0.6));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+  opacity: var(--ln, 0);
+  will-change: opacity;
+}
+.card-dark, .promo-card, .foot-card, .feature-card, .faq-item, .vip-card, .contact-card, .card-wide { position: relative; }
+
+/* тёплая заливка поверхности + тень, отброшенная ОТ лампы —
+   только на карточках со свободным ::after */
+.feature-card::after, .faq-item::after, .vip-card::after, .contact-card::after, .card-wide::after {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  border-radius: inherit; pointer-events: none;
+  background: radial-gradient(130% 130% at 85% 0%, rgba(255, 138, 61, 0.5), transparent 60%);
+  opacity: calc(var(--ln, 0) * 0.16);
+  box-shadow: var(--lsx, -6px) var(--lsy, 8px) 26px rgba(10, 8, 6, calc(var(--ln, 0) * 0.25));
+  will-change: opacity;
+}

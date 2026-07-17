@@ -375,6 +375,96 @@ function renderFooter() {
   applyI18n();
 }
 
+/* ---------- Угловая LED-лампа: разгорается при прокрутке ----------
+   Интенсивность 0.15 в покое → плавно к 1.0 во время скролла (lerp 0.06),
+   после остановки ждёт ~400мс и гаснет обратно за ~1.5с. Лёгкий
+   параллакс-дрейф и наклон до 2° (perspective) — только transform.
+   Публикует --lamp-i; карточкам в конусе света ставит --ln/--la/--lsx/--lsy. */
+function initLamp() {
+  const rig = document.getElementById("lampRig");
+  if (!rig) return;
+
+  const root = document.documentElement;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mobile = window.matchMedia("(max-width: 700px)").matches;
+
+  // дальность луча: ~55% большей стороны вьюпорта (на телефоне ширины мало)
+  const CONE = () => Math.max(innerWidth, innerHeight) * 0.55;
+  const reflectSel = ".card-dark,.promo-card,.foot-card,.feature-card,.faq-item,.vip-card,.contact-card,.card-wide,.vip-big";
+
+  function lampPoint() { // центр светящейся линии в координатах вьюпорта
+    const r = rig.getBoundingClientRect();
+    return { x: r.right, y: r.top + r.height / 2 };
+  }
+
+  function setElementVars(el, lamp, I) {
+    const r = el.getBoundingClientRect();
+    if (r.bottom < -80 || r.top > innerHeight + 80) { el.style.setProperty("--ln", 0); return; }
+    const ex = r.left + r.width / 2, ey = r.top + r.height / 2;
+    const dx = lamp.x - ex, dy = lamp.y - ey;
+    const dist = Math.hypot(dx, dy);
+    // конус: свет идёт влево и вниз от планки
+    const inCone = ex < lamp.x + 60 && ey > lamp.y - innerHeight * 0.35 ? 1 : 0.25;
+    const near = Math.max(0, 1 - dist / CONE()) * inCone * I;
+    const ang = Math.atan2(dx, -dy) * 180 / Math.PI; // конец градиента смотрит на лампу
+    el.style.setProperty("--ln", near.toFixed(3));
+    el.style.setProperty("--la", ang.toFixed(1));
+    // тень отбрасывается от лампы (нормированный вектор ×10px)
+    if (dist > 1) {
+      el.style.setProperty("--lsx", (-dx / dist * 10).toFixed(1) + "px");
+      el.style.setProperty("--lsy", (-dy / dist * 12).toFixed(1) + "px");
+    }
+  }
+
+  if (reduced) { // без движения: лампа на 40%, блики статичны
+    root.style.setProperty("--lamp-i", 0.4);
+    const lamp = lampPoint();
+    document.querySelectorAll(reflectSel).forEach((el) => setElementVars(el, lamp, 0.4));
+    return;
+  }
+
+  let I = 0.15;              // текущая интенсивность
+  let lastY = scrollY, lastMoveT = performance.now();
+  let tiltX = 0, tiltY = 0;
+  let els = [...document.querySelectorAll(reflectSel)];
+  let frame = 0;
+  document.addEventListener("langchange", () => setTimeout(() => {
+    els = [...document.querySelectorAll(reflectSel)];
+  }, 50));
+
+  function tick(t) {
+    frame++;
+    if (frame % 60 === 0) els = [...document.querySelectorAll(reflectSel)];
+
+    const dy = scrollY - lastY;
+    lastY = scrollY;
+    if (Math.abs(dy) > 0.5) lastMoveT = t;
+
+    // цель: 1 во время прокрутки; после 400мс покоя — 0.15
+    const target = (t - lastMoveT < 400) ? 1 : 0.15;
+    I += (target - I) * (target > I ? 0.06 : 0.045); // вверх ~разгорание, вниз ~1.5с
+
+    // параллакс-дрейф (мягко ограничен) и наклон до 2°
+    let ty = 0, rx = 0, ry = 0;
+    if (!mobile) {
+      ty = -60 * Math.tanh(scrollY * 0.08 / 60);
+      tiltX += (Math.max(-2, Math.min(2, dy * 0.12)) - tiltX) * 0.08;
+      tiltY += (Math.max(-1, Math.min(1, dy * -0.06)) - tiltY) * 0.08;
+      rx = tiltX; ry = tiltY;
+    }
+    rig.style.transform = `perspective(800px) translate3d(0,${ty.toFixed(1)}px,0) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+    root.style.setProperty("--lamp-i", I.toFixed(3));
+
+    const lamp = lampPoint();
+    root.style.setProperty("--lamp-x", lamp.x.toFixed(0) + "px");
+    root.style.setProperty("--lamp-y", lamp.y.toFixed(0) + "px");
+    for (const el of els) setElementVars(el, lamp, I);
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 /* ---------- Инициализация ---------- */
 function renderAll() {
   renderPromos();
@@ -430,6 +520,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartBadge();
   initParallax();
   initHeroMedia();
+  initLamp();
 
   // шапка: прозрачная поверх hero, при прокрутке — с блюром
   const hdr = document.querySelector(".site-header");
