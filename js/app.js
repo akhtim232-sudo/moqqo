@@ -375,111 +375,6 @@ function renderFooter() {
   applyI18n();
 }
 
-/* ---------- Живой свет: янтарный орб, движущийся при прокрутке ----------
-   Путь: правая часть первого экрана → синусоидальный дрейф через середину
-   страницы → у VIP-секции (или футера) свет крупнее и ярче всего.
-   Движение сглажено lerp (0.08), в покое орб «дышит» (~6 с цикл).
-   Позиция публикуется в --glow-x/--glow-y; элементы [data-reflect]
-   получают --ang (угол на свет) и --near (близость 0..1). */
-function initGlow() {
-  const orb = document.getElementById("glowOrb");
-  const orb2 = document.getElementById("glowOrb2");
-  if (!orb) return;
-
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const mobile = window.matchMedia("(max-width: 700px)").matches;
-  const root = document.documentElement;
-
-  // точка «покоя» света: VIP-превью на главной, иначе футер
-  const settleEl = document.getElementById("vipPreview") || document.querySelector(".foot-card");
-
-  if (reduced) {
-    // без движения: свет замирает за первым экраном
-    const x = innerWidth * 0.72, y = innerHeight * 0.4;
-    orb.style.transform = `translate3d(${x}px,${y}px,0)`;
-    if (orb2) orb2.style.transform = `translate3d(${innerWidth * 0.2}px,${innerHeight * 0.8}px,0)`;
-    root.style.setProperty("--glow-x", x + "px");
-    root.style.setProperty("--glow-y", y + "px");
-    document.querySelectorAll(".card-dark,.promo-card,.foot-card,.feature-card,.faq-item,.vip-card,.contact-card,.vip-big")
-      .forEach((el) => { el.style.setProperty("--near", 0.25); });
-    return;
-  }
-
-  let cx = innerWidth * 0.72, cy = innerHeight * 0.42; // текущая позиция (lerp)
-  let reflectEls = [];
-  let frame = 0;
-
-  function collectReflect() {
-    reflectEls = [...document.querySelectorAll(
-      ".card-dark,.promo-card,.foot-card,.feature-card,.faq-item,.vip-card,.contact-card,.vip-big"
-    )];
-  }
-  collectReflect();
-  document.addEventListener("langchange", () => setTimeout(collectReflect, 50));
-
-  function tick(t) {
-    frame++;
-    if (frame % 60 === 0) collectReflect(); // раз в секунду — на случай перерисовок
-
-    const vw = innerWidth, vh = innerHeight;
-    // прогресс до точки покоя (0..1)
-    let settleCenter = document.documentElement.scrollHeight - vh / 2;
-    if (settleEl) {
-      const r = settleEl.getBoundingClientRect();
-      settleCenter = r.top + scrollY + r.height / 2;
-    }
-    const range = Math.max(1, settleCenter - vh * 0.5);
-    const p = Math.min(1, Math.max(0, scrollY / range));
-
-    // целевая точка: старт справа у hero → плавный синус-дрейф → центр VIP
-    const startX = vw * 0.72, endX = vw * 0.5;
-    const sway = Math.sin(p * Math.PI * 2) * vw * 0.26 * (1 - p);
-    const tx = startX + (endX - startX) * p + sway;
-    const startDocY = vh * 0.42;
-    const targetDocY = startDocY + (settleCenter - startDocY) * p;
-    const ty = targetDocY - scrollY;
-
-    // сглаживание — свет чуть отстаёт от прокрутки
-    cx += (tx - cx) * 0.08;
-    cy += (ty - cy) * 0.08;
-
-    // дыхание: масштаб 1→1.05 и ±10% яркости за ~6 с
-    const breathe = Math.sin(t / 6000 * Math.PI * 2);
-    const scale = (1 + 0.25 * p) * (1 + 0.05 * (breathe + 1) / 2);
-    const baseOp = (mobile ? 0.42 : 0.55) * (0.85 + 0.35 * p);
-    orb.style.transform = `translate3d(${cx.toFixed(1)}px,${cy.toFixed(1)}px,0) scale(${scale.toFixed(3)})`;
-    orb.style.opacity = (baseOp * (1 + 0.1 * breathe)).toFixed(3);
-
-    // второй орб дрейфует навстречу
-    if (orb2) {
-      const x2 = vw * 0.15 + (vw * 0.55) * p;
-      const y2 = vh * 0.85 - (cy - vh * 0.4) * 0.4;
-      orb2.style.transform = `translate3d(${x2.toFixed(1)}px,${y2.toFixed(1)}px,0) scale(${(1 + 0.04 * breathe).toFixed(3)})`;
-    }
-
-    root.style.setProperty("--glow-x", cx.toFixed(0) + "px");
-    root.style.setProperty("--glow-y", cy.toFixed(0) + "px");
-    root.style.setProperty("--shx", (cx / vw).toFixed(3));
-
-    // отражения: угол на свет и близость для видимых элементов
-    for (const el of reflectEls) {
-      const r = el.getBoundingClientRect();
-      if (r.bottom < -100 || r.top > vh + 100) { el.style.setProperty("--near", 0); continue; }
-      const ex = r.left + r.width / 2, ey = r.top + r.height / 2;
-      const dx = cx - ex, dy = cy - ey;
-      const dist = Math.hypot(dx, dy);
-      const near = Math.max(0, Math.min(1, 1 - dist / (mobile ? 620 : 850)));
-      // угол CSS-градиента, конец которого смотрит на орб
-      const ang = Math.atan2(dx, -dy) * 180 / Math.PI;
-      el.style.setProperty("--near", near.toFixed(3));
-      el.style.setProperty("--ang", ang.toFixed(1));
-    }
-
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
-
 /* ---------- Инициализация ---------- */
 function renderAll() {
   renderPromos();
@@ -535,7 +430,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartBadge();
   initParallax();
   initHeroMedia();
-  initGlow();
 
   // шапка: прозрачная поверх hero, при прокрутке — с блюром
   const hdr = document.querySelector(".site-header");
